@@ -13,6 +13,13 @@ class Departamento(models.Model):
     def __str__(self):
         return self.nombre
 
+class Cliente(models.Model):
+    nombre = models.CharField(blank=True, max_length=100)
+    telefono = models.CharField(blank=True, max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
 class tiposTrabajos(models.Model):
     nombre = models.CharField(blank=True, max_length=100)
 
@@ -25,8 +32,9 @@ class tiposTrabajos(models.Model):
 
 class Trabajo(models.Model):
     """(Trabajo   description)"""
-    Trabajador = models.OneToOneField('users.Trabajador')
-    tipo = models.OneToOneField(tiposTrabajos)
+    Trabajador = models.ForeignKey('users.Trabajador')
+    cliente = models.OneToOneField(Cliente, blank=True, null= True)
+    tipo = models.ForeignKey(tiposTrabajos)
     precio = models.SmallIntegerField(blank=False, null=False)
     fecha = models.DateTimeField(blank=True, auto_now_add=True)
     cdRDC = models.BooleanField(default=False)
